@@ -156,7 +156,7 @@ def swapped(image1 , image2):
 	Combines all function and outputs a swapped image
 	'''
 	check = get_landmarks(image1, False)
-	
+
 	if check == 'error':
 		print ('Too Many Faces(No pun intended')
 		return image1
@@ -165,7 +165,7 @@ def swapped(image1 , image2):
 	image2, landmarks2 = read_features(image2)	
 
 	M = transform_points(landmarks1[ALIGN_POINTS], landmarks2[ALIGN_POINTS])
-	
+
 	mask = face_mask(image2, landmarks2)
 	warped_mask = warp_image(mask, M, image1.shape)
 	combined_mask = np.max([face_mask(image1, landmarks1), warped_mask], axis=0)
@@ -175,8 +175,7 @@ def swapped(image1 , image2):
 
 	final_output = image1 * (1.0 - combined_mask) + warped_image2_new * combined_mask
 	cv2.imwrite("SwappedImage.jpg", final_output)
-	o = cv2.imread("SwappedImage.jpg")
-	return o
+	return cv2.imread("SwappedImage.jpg")
 
 # Loading our image and camera frame
 capture = cv2.VideoCapture(0)
